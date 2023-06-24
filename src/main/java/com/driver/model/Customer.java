@@ -15,6 +15,31 @@ public class Customer {
 
     @ManyToOne
     Admin admin;
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public Admin getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Admin admin) {
+        this.admin = admin;
+    }
+
+    public List<TripBooking> getTripBookingList() {
+        return tripBookingList;
+    }
+
+    public void setTripBookingList(List<TripBooking> tripBookingList) {
+        this.tripBookingList = tripBookingList;
+    }
+
     @OneToMany(mappedBy = "customer")
     List<TripBooking> tripBookingList = new ArrayList<>();
     public String getMobile() {
