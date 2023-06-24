@@ -1,16 +1,14 @@
 package com.driver.services.impl;
 
-import com.driver.model.TripBooking;
+import com.driver.model.*;
+import com.driver.repository.CabRepository;
 import com.driver.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.driver.model.Customer;
-import com.driver.model.Driver;
 import com.driver.repository.CustomerRepository;
 import com.driver.repository.DriverRepository;
 import com.driver.repository.TripBookingRepository;
-import com.driver.model.TripStatus;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	TripBookingRepository tripBookingRepository2;
+
+	@Autowired
+	CabRepository cabRepository2;
 
 	@Override
 	public void register(Customer customer) {
@@ -94,6 +95,10 @@ public class CustomerServiceImpl implements CustomerService {
 		if(tripBooking.isPresent()){
 			TripBooking scopeTrip= tripBooking.get();
 			scopeTrip.setTripStatus(TripStatus.CANCELED);
+			Driver driver = scopeTrip.getDriver();
+			Cab cab = driver.getCab();
+			cab.setAvailable(true);
+			cabRepository2.save(cab);
 			tripBookingRepository2.save(scopeTrip);
 		}
 	}
